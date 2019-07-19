@@ -38,29 +38,28 @@ export class MD5Cache{
 
     /**
      * 文件是否和之前的记录相同
-     * @param path 
+     * @param key 
      */
-    isNew(path:string){
-        let info = this.caches[path];
+    isNew(key:string,md5:string){
+        let info = this.caches[key];
         if(!info){
             return true;
         }
-        let md5 = wlutil.md5(path);
+       // let md5 = wlutil.md5(path);
         return info.md5 !== md5;
     }
 
     /**
      * 记录文件,返回true代表和之前不一样，实际使用时看情况，如果判断和储存分开的话，要用isNew判断，逻辑都执行完后再record
-     * @param path 
+     * @param key 
      */
-    record(path:string){
+    record(key:string,md5:string){
         
-        let info = this.caches[path];
+        let info = this.caches[key];
         if(!info){
             info = {};
-            this.caches[path] = info;
+            this.caches[key] = info;
         }
-        let md5 = wlutil.md5(path);
         if(md5 === info.md5){
             return false;
         }
